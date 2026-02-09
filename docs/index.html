@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amble - Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --color-moss: #5B7355;
+            --color-moss-dark: #3F523B;
+            --color-clay: #C17F59;
+            --color-ocean: #5B8A8A;
+            --color-cream: #FAF9F7;
+            --text-white: #FFFFFF;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-moss);
+            color: var(--text-white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* ++ Pattern Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            background-color: var(--color-moss);
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 60px 60px;
+            background-position: center center;
+        }
+
+        /* Overlay for vignette */
+        .bg-pattern::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+        }
+
+        /* Full screen snapping */
+        .container {
+            height: 100vh;
+            width: 100%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+        }
+
+        .slide {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 40px;
+        }
+
+        /* Specific Poppins Logo Style */
+        .logo-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .logo-icon {
+            font-size: 4rem;
+        }
+
+        .logo-text {
+            font-size: 5rem;
+            letter-spacing: -0.02em;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            color: #E8F5E9;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        p,
+        li {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        /* Components */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 32px;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 1300px;
+            width: 100%;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1300px;
+            width: 100%;
+            align-items: center;
+        }
+
+        /* Tiny Button */
+        .btn-tiny {
+            font-size: 0.7rem;
+            padding: 8px 16px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 32px;
+        }
+
+        .btn-tiny:hover {
+            background: white;
+            color: var(--color-moss);
+            transform: translateY(-2px);
+        }
+
+        /* Layout Elements */
+        .presentation-image {
+            width: 100%;
+            max-width: 100%;
+            /* Ensure it fits container */
+            max-height: 50vh;
+            /* Constrain height for Slide 2 */
+            object-fit: contain;
+            /* Don't crop */
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+            border: 6px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dashboard-mockup {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-mockup:hover {
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .members {
+            margin-top: 48px;
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            opacity: 0.8;
+        }
+
+        .member-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+            font-weight: 500;
+        }
+
+        .tech-list {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .tech-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .tech-icon {
+            opacity: 0.8;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Nav Dots */
+        .nav-dots {
+            position: fixed;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .nav-dot.active::after {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Feature Badge */
+        .feature-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+            display: block;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            width: fit-content;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .grid-4,
+            .grid-3,
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .slide {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .logo-text {
+                font-size: 3rem;
+            }
+
+            .logo-icon {
+                font-size: 2.5rem;
+            }
+
+            .grid-2 {
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-pattern"></div>
+    <div class="nav-dots" id="navDots"></div>
+
+    <div class="container" id="scroller">
+
+        <!-- Slide 1: Title -->
+        <section class="slide" id="slide1">
+            <div style="text-align: center;">
+                <div class="logo-brand" style="justify-content: center;">
+                    <span class="logo-icon">🌿</span>
+                    <span class="logo-text">amble</span>
+                </div>
+                <!-- Updated theme: Turning Goals into Reality -->
+                <p style="font-size: 1.8rem; letter-spacing: 0.02em; opacity: 1; font-weight: 500;">Turning Wellness
+                    Goals into Daily Reality</p>
+                <p style="font-size: 1.2rem; opacity: 0.7; margin-top: 10px;">An AI Companion for connecting elders with
+                    their family
+                </p>
+                <div class="members">
+                    <span class="member-badge">Kathan Dave</span>
+                    <span class="member-badge">Paridhi Jain</span>
+                    <span class="member-badge">Jash Parikh</span>
+                </div>
+                <a href="#slide2" class="btn-tiny">Start Overview</a>
+            </div>
+        </section>
+
+        <!-- Slide 2: Graphic/Vision (Sizing Fixed) -->
+        <section class="slide" id="slide2">
+            <div class="grid-2">
+                <div style="text-align: left; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="font-size: 3rem; margin-bottom: 20px; line-height: 1.1;">Stay Active, Stay <span
+                            style="color: #A3C9A8;">Connected</span></h3>
+                    <p style="margin-bottom: 24px; font-size: 1.25rem; opacity: 0.9;">Amble helps you maintain healthy
+                        daily routines while keeping your loved ones connected and at peace. An AI companion that adapts
+                        to your lifestyle, not the other way around.</p>
+                    <img src="team.jpeg" alt="Team Visualization" class="presentation-image"
+                        style="object-fit: cover; max-height: 400px; width: 100%;">
+                </div>
+                <!-- Using the second graphic correctly sized -->
+                <div class="glass-card"
+                    style="justify-content: center; text-align: center; border: none; background: transparent; backdrop-filter: none; padding: 0;">
+                    <img src="slide2_graphic.jpeg" alt="Vision Graphic" class="presentation-image"
+                        style="max-height: 500px;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: For You (Parent) - Goals Focus -->
+        <section class="slide" id="slide3">
+            <h2 style="display: flex; align-items: center; gap: 12px; font-family: 'Poppins', sans-serif;">
+                <span style="font-size: 2.5rem;">🌿</span> For You — Achieving Your Best Self
+            </h2>
+            <div class="grid-4">
+                <div class="glass-card">
+                    <span class="feature-tag">Goal: Routine</span>
+                    <h3>Daily Routine Companion</h3>
+                    <p>Turns the goal of "staying active" into reality with gentle reminders for walks and meds that
+                        adapt to you.</p>
+                </div>
+                <div class="glass-card">
+                    <span class="feature-tag">Goal: Socializing</span>
+                    <h3>Activity Discovery</h3>
+                    <p>Realizes the goal of "meeting new people" by finding local walking groups and clubs
+                        automatically.</p>
+                </div>
+                <div class="glass-card">
+                    <span class="feature-tag">Goal: Self-Care</span>
+                    <h3>Wellness Check-ins</h3>
+                    <p>Tracks mood and energy to help you visualize your progress and celebrate small wins.</p>
+                </div>
+                <div class="glass-card">
+                    <span class="feature-tag">Goal: Connection</span>
+                    <h3>Easy Family Connection</h3>
+                    <p>Removes tech barriers so staying in touch is as simple as one tap.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: For Family - Peace of Mind Goals -->
+        <section class="slide" id="slide4">
+            <h2 style="display: flex; align-items: center; gap: 12px; font-family: 'Poppins', sans-serif;">
+                <span style="font-size: 2.5rem;">🌿</span> For Family — Peace of Mind
+            </h2>
+            <div class="grid-4">
+                <div class="glass-card">
+                    <i data-lucide="activity" style="margin-bottom: 12px; opacity: 0.9;"></i>
+                    <h3>Activity Insights</h3>
+                    <p>See how your loved one is progressing towards their wellness goals at a glance.</p>
+                </div>
+                <div class="glass-card">
+                    <i data-lucide="brain-circuit" style="margin-bottom: 12px; opacity: 0.9;"></i>
+                    <h3>Smart Detection</h3>
+                    <p>AI proactively helps them stay on track by noticing slips in routine before they become issues.
+                    </p>
+                </div>
+                <div class="glass-card">
+                    <i data-lucide="bell-ring" style="margin-bottom: 12px; opacity: 0.9;"></i>
+                    <h3>Intelligent Alerts</h3>
+                    <p>Alerts that matter—helping you support their goals without being intrusive.</p>
+                </div>
+                <div class="glass-card">
+                    <i data-lucide="users" style="margin-bottom: 12px; opacity: 0.9;"></i>
+                    <h3>Family Coordination</h3>
+                    <p>Coordinate impactful visits and calls to ensure everyone contributes to their well-being.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Dashboards -->
+        <section class="slide" id="slide5">
+            <h2>User Experience</h2>
+            <div class="grid-2" style="gap: 40px; align-items: flex-start;">
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <h3>Parent Dashboard</h3>
+                    <img src="family_dashboard_img.jpeg" alt="Parent Dashboard" class="dashboard-mockup">
+                    <p style="font-size: 0.9rem; opacity: 0.7;">Simple, large-touch interface designed to make
+                        technology invisible.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 60px;">
+                    <h3>Family Dashboard</h3>
+                    <img src="parent_dashboard_img.jpeg" alt="Family Dashboard" class="dashboard-mockup">
+                    <p style="font-size: 0.9rem; opacity: 0.7;">Detailed insights and alerts for complete peace of mind.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Core Agent Architecture -->
+        <section class="slide" id="slide6">
+            <h2>Intelligent Agent System</h2>
+            <div class="grid-3">
+                <div class="glass-card">
+                    <i data-lucide="brain-circuit" style="margin-bottom: 16px; opacity: 0.9;"></i>
+                    <h3>Unified Reasoning Agent</h3>
+                    <p>Powered by <strong>Google ADK</strong> and <strong>Gemini 2.5 Flash</strong>. Seamlessly executes
+                        tasks to turn user requests into real-world actions.</p>
+                </div>
+                <div class="glass-card">
+                    <i data-lucide="history" style="margin-bottom: 16px; opacity: 0.9;"></i>
+                    <h3>Long-Term Memory</h3>
+                    <p>Integrated with <strong>Mem0</strong>. The agent remembers goals and preferences to provide
+                        consistent, long-term support.</p>
+                </div>
+                <div class="glass-card">
+                    <i data-lucide="activity" style="margin-bottom: 16px; opacity: 0.9;"></i>
+                    <h3>Observability</h3>
+                    <p>Full tracing with <strong>Comet Opik</strong> ensuring every agent action aligns with user safety
+                        and goals.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Slide : Agent Deep Dive (New) -->
+        <section class="slide" id="slide_agent_deep">
+            <h2>Engineered for Action</h2>
+            <p style="margin-bottom: 40px; text-align: center; max-width: 800px; opacity: 0.8;">
+                Built on a solid foundation of <strong>20+ specialized tools</strong> , allowing Amble
+                to move beyond simple conversation into meaningful, proactive assistance.
+            </p>
+            <div class="grid-3">
+                <!-- Column 1: Perception -->
+                <div class="glass-card">
+                    <span class="feature-tag">01. Perception</span>
+                    <h3>Deep Context Awareness</h3>
+                    <p style="font-size: 0.95rem; opacity: 0.8; margin-bottom: 12px;">The agent aggregates real-time
+                        signals to understand the full picture.</p>
+                    <ul class="tech-list">
+                        <li><i data-lucide="bar-chart-2" class="tech-icon"></i> <code>Analyze Wellness Patterns</code>
+                        </li>
+                        <li><i data-lucide="wallet" class="tech-icon"></i> <code>Analyze Spending Patterns</code></li>
+                        <li><i data-lucide="history" class="tech-icon"></i> <code>Track Mood and Activity</code></li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Reasoning -->
+                <div class="glass-card"
+                    style="border-color: rgba(163, 201, 168, 0.5); background: rgba(163, 201, 168, 0.1);">
+                    <span class="feature-tag"
+                        style="background: white; color: var(--color-moss); font-weight: 700; border: none;">02.
+                        Reasoning</span>
+                    <h3>Proactive Logic</h3>
+                    <p style="font-size: 1rem; margin-top: 8px; line-height: 1.6;">
+                        Powered by <strong>Gemini 2.5 Flash</strong>. The agent connects data points, realizing that
+                        <em>"low mood"</em> + <em>"missed walk"</em> for few days requires immediate, gentle
+                        intervention.
+                    </p>
+                </div>
+
+                <!-- Column 3: Execution -->
+                <div class="glass-card">
+                    <span class="feature-tag">03. Execution</span>
+                    <h3>Deterministic Action</h3>
+                    <p style="font-size: 0.95rem; opacity: 0.8; margin-bottom: 12px;">Safe, reliable tools that interact
+                        with the real world.</p>
+                    <ul class="tech-list">
+                        <li><i data-lucide="calendar-check" class="tech-icon"></i>
+                            <code>Schedule and Manage Appointment</code>
+                        </li>
+                        <li><i data-lucide="alert-circle" class="tech-icon"></i> <code>Send Family Alert</code></li>
+                        <li><i data-lucide="search" class="tech-icon"></i> <code>Search Local Activities</code></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Slide 7: Technology Stack -->
+        <section class="slide" id="slide7">
+            <h2>Technical Stack</h2>
+            <div class="grid-2">
+                <div class="glass-card">
+                    <h3 style="margin-bottom: 24px;">Microservices & AI</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                        <div>
+                            <span class="feature-tag">Core AI</span>
+                            <p style="font-weight: 500;">Google Agent Dev Kit</p>
+                            <p style="font-size: 0.9rem; opacity: 0.7;">Gemini 2.5 Flash Reasoning</p>
+                        </div>
+                        <div>
+                            <span class="feature-tag">Voice & Avatar</span>
+                            <p style="font-weight: 500;">ElevenLabs & Anam.ai</p>
+                            <p style="font-size: 0.9rem; opacity: 0.7;">Real-time Lip Sync & Synthesis</p>
+                        </div>
+                        <div>
+                            <span class="feature-tag">Data Layer</span>
+                            <p style="font-weight: 500;">Supabase & Mem0</p>
+                            <p style="font-size: 0.9rem; opacity: 0.7;">Vector Store & Relational DB</p>
+                        </div>
+                        <div>
+                            <span class="feature-tag">Backend</span>
+                            <p style="font-weight: 500;">FastAPI</p>
+                            <p style="font-size: 0.9rem; opacity: 0.7;">Async Python Server</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="justify-content: center; text-align: center;">
+                    <i data-lucide="zap" style="width: 48px; height: 48px; margin: 0 auto 20px auto;"></i>
+                    <h3>Performance</h3>
+                    <p>Real-time WebSockets ensure < 200ms latency for voice interactions.</p>
+                            <p style="margin-top: 10px;">Deterministic tool usage guarantees safety.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Closing -->
+        <section class="slide" id="slide8">
+            <div class="logo-brand" style="justify-content: center;">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">amble</span>
+            </div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">From Intention to Action</h2>
+            <p style="font-size: 1.5rem; max-width: 700px; text-align: center;">Making active aging and family
+                connection a daily reality through intelligent agents.</p>
+            <a href="#slide1" class="btn-tiny">Restart</a>
+        </section>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Nav Dots Logic
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('navDots');
+
+        slides.forEach((slide, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('nav-dot');
+            dot.onclick = () => {
+                slide.scrollIntoView({ behavior: 'smooth' });
+            };
+            dotsContainer.appendChild(dot);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(slides).indexOf(entry.target);
+                    document.querySelectorAll('.nav-dot').forEach((d, i) => {
+                        d.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        slides.forEach(slide => observer.observe(slide));
+    </script>
+</body>
+
+</html>
